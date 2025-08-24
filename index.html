@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Neyney!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: linear-gradient(to bottom, #ffebee, #fce4ec);
+            color: #333;
+            line-height: 1.8;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .book-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+        
+        .book-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #ffccd5;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #d81b60;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-content {
+            font-size: 1.15rem;
+            text-align: justify;
+            min-height: 450px;
+            padding: 10px;
+        }
+        
+        .date-marker {
+            font-weight: bold;
+            color: #c2185b;
+            display: block;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        .heart {
+            color: #ff4081;
+            display: inline-block;
+            margin: 0 3px;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.1); }
+            10% { transform: scale(1); }
+            15% { transform: scale(1.1); }
+            20% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed #ffccd5;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .nav-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .page-indicator {
+            text-align: center;
+            font-style: italic;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .book-container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .page-content {
+                font-size: 1.05rem;
+                min-height: 400px;
+            }
+            
+            .nav-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f44336;
+            opacity: 0.7;
+            border-radius: 0;
+            z-index: -1;
+        }
+        
+        @keyframes fall {
+            from { transform: translateY(-100px) rotate(0deg); }
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="book-container">
+        <div class="header">
+            <h1 class="floating">Happy Birthday! <span class="heart">🥳🎉
+</span></h1>
+        </div>
+        
+        <div class="page-content" id="page-content">
+            <!-- Konten halaman akan diisi oleh JavaScript -->
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn" disabled>Sebelumnya</button>
+            <div class="page-indicator" id="page-indicator">Halaman 1/8</div>
+            <button class="nav-btn" id="next-btn">Selanjutnya</button>
+        </div>
+        
+        <div class="footer">
+            <p>Dibuat dengan <span class="heart">❤️</span> untuk Neyney </p>
+        </div>
+    </div>
+
+    <script>
+        // Data cerita per halaman
+        const storyPages = [
+            // Halaman 1
+            `<p>9 Agustus 2006</p>
+            <p>Aku terlahir ke dunia ini tanpa tahu apa yang menantiku. Segalanya masih asing, masih kosong. Namun dari lembaran awal inilah, aku akan menyampaikan sedikit kisah tentang bagaimana aku akhirnya bertemu dengan seseorang yang dapat menjelaskan apa itu cinta. Seseorang yang 16 hari setelah aku hadir, juga akan membuka matanya untuk pertama kali.</p>
+
+            <p>25 Agustus 2006</p>
+            <p>Hari itu, Ariadne Delphina Chestralova lahir ke dunia yang sama, tanpa menyadari bahwa suatu saat takdir akan mempertemukan kami. Ia pastinya belum tau, bahwa garis hidup kami perlahan sedang disulam.</p>
+
+            <p>Hai, aku Rafif Salman Al-Faiz.</p>
+            <p>Aku menjalani hidup ini seperti mengikuti arah angin. Aku hanya melakukan apa yang memang harus kulakukan. Jika angin membawaku untuk pintar, maka aku akan berusaha menjadi pintar. Jika angin menuntunku untuk melakukan sesuatu, aku akan mencoba melakukannya.</p>
+
+            <p>Namun ada satu hal yang selalu berbeda, cinta.</p>
+            <p>Seumur hidupku, aku tak pernah benar-benar percaya padanya. Bahkan ketika angin seakan memaksaku untuk menyukai seseorang, aku tetap tak pernah menganggap itu sebagai cinta. Bagiku, cinta hanyalah sesuatu yang abu-abu, sesuatu yang tak logis. Keyakinan itu kubangun dari pengalaman dan segala hal yang pernah kulihat hingga aku benar-benar percaya bahwa cinta bukanlah sesuatu yang nyata.</p>
+            <p>Hingga angin itu membawaku ke masa SMA.</p>`,
+
+            // Halaman 2
+            `<p>18 Juli 2022</p>
+            <p>Hari pertamaku mengikuti kegiatan di SMA, MPLS. Sebenarnya, aku datang terlambat. Aku baru mendaftar di hari Sabtu, sementara acara MPLS sudah berjalan sejak sehari sebelumnya. Alasannya sederhana, aku gagal masuk SMA favoritku, juga gagal di SMA negeri lain. Akhirnya, aku memilih SMA swasta yang letaknya paling dekat dari rumah.</p>
+
+            <p>Pada masa MPLS itu, aku mendapat dua teman dekat, dan salah satunya kebetulan sekelas denganku. Saat pembagian bangku kelas, kami diminta menentukan tempat duduk sendiri. Aku yang pemalu hanya ikut arus akhirnya duduk di bagian belakang, bersebelahan dengan barisan perempuan. Jujur, aku agak canggung. Tapi aku tidak terlalu memikirkannya, karena setelahnya aku mulai berkenalan dengan semua orang.</p>
+
+            <p>Sebelum itu, ada satu momen seluruh kelas diminta memperkenalkan diri satu per satu dengan berdiri.</p>
+            <p>Aku sendiri, jujur, hanya benar-benar memperhatikan ketika giliran laki-laki. Alasanku sederhana, aku ingin tahu sifat mereka, bagaimana caranya mereka bicara, supaya aku bisa mengira-ngira bagaimana cara mendekat dan berteman dengan mereka.</p>
+
+            <p>Sampai tiba giliran seorang perempuan.</p>
+            <p>Tiba-tiba saja seluruh ruangan terfokus padanya. Bukan karena penampilannya, melainkan karena nama panggilannya yang unik. Nama aslinya agak sulit diingat, tapi ia memperkenalkan diri sebagai Ariadne Delphina Chestralova atau yang kemudian dipanggil oleh semua orang, Neyney.</p>
+
+            <p>Sejujurnya, aku bahkan tidak sempat benar-benar mendengar nama aslinya kala itu. Tapi suara yang berulang-ulang menyebut "Neyney… Neyney… Neyney…" sempat mengetuk sesuatu di dalam kepalaku. Sekilas saja. Lalu entah kenapa, seiring waktu, wajahnya kembali memudar dari ingatanku.</p>`,
+
+            // Halaman 3
+            `<p>Agustus 2022</p>
+            <p>Aku mulai merasa nyaman di sekolah baruku. Dua orang teman dekat baru yang kuperoleh membuat hari-hariku tak terlalu sepi. Mereka tipe yang ekstrovert, selalu ramai, selalu punya bahan obrolan. Dan seperti biasanya, aku hanya mengikuti angin.</p>
+
+            <p>Salah satu dari mereka bernama Ferdy. Bisa dibilang, dialah orang yang tanpa sadar mulai menautkan benang merahku dengan Neyney.</p>
+
+            <p>Aku masih ingat jelas suatu pelajaran Matematika. Saat itu aku duduk di samping Ferdy. Ia memperhatikanku menulis, lalu berkomentar,</p>
+            <p>"Eh, kamu pinter juga ya."</p>
+
+            <p>Tentu saja aku tersenyum kecil. Bagiku, itu wajar. Pelajaran matematika di awal SMA memang belum terlalu sulit.</p>
+
+            <p>Tapi kemudian ia menambahkan,</p>
+            <p>"Tau nggak, Neyney juga pinter banget loh. Aku tau soalnya dulu kita satu sekolah pas SMP."</p>
+
+            <p>Aku terdiam sejenak, lalu dengan polos bertanya,</p>
+            <p>"Oh iya? Neyney itu yang mana orangnya?"</p>
+
+            <p>Seketika Ferdy menyeringai nakal.</p>
+            <p>"Cieee… nanyain. Pasti suka, ya?"</p>
+
+            <p>Dalam hatiku aku hanya mendengus, apasih, co… wkwk. Padahal aku benar-benar hanya ingin tahu orangnya, karena jujur saja, aku bahkan belum hafal wajahnya. Tapi sejak saat itu, entah kenapa, aku mulai sering dicandai soal dia.</p>
+
+            <p>Hari-hari berikutnya, aku mulai akrab dengan seorang teman perempuan bernama Zahra. Dari kebersamaan itulah, tanpa kusadari, aku perlahan menjadi terbiasa dengan sosok di balik nama unik yang sempat hanya sekilas mampir di kepalaku, Neyney.</p>`,
+
+            // Halaman 4
+            `<p>Zahra dan Neyney hampir tak terpisahkan, selalu berjalan berdua, selalu berbagi tawa. Dan karena itulah, setiap kali aku bersama Zahra, aku juga melihatnya. Dari yang awalnya hanya samar, nama yang terdengar asing namun menggema, kini perlahan menjelma menjadi sosok nyata yang mulai kuingat, sedikit demi sedikit.</p>
+
+            <p>Di sekolah kami, kurikulum menuntut adanya sebuah tugas proyek. Kami diminta membentuk kelompok untuk melakukan penelitian sederhana. Saat itu, kelompok kami memilih topik tentang kue pancong.</p>
+
+            <p>Aku ingat, Zahra yang pertama kali mengajakku bergabung. Aku lalu membawa dua temanku, Ikbal dan Ferdy. Akhirnya terbentuklah kelompok dengan enam orang tiga laki-laki dan tiga perempuan. Tiga laki-lakinya adalah aku, Ikbal, dan Ferdy. Tiga perempuannya Zahra, Nadya, dan… Neyney.</p>
+
+            <p>Banyak momen menarik yang terjadi selama kami mengerjakan proyek itu. Kami menghabiskan waktu bersama, berdiskusi, bahkan sampai melakukan perjalanan ke Bandung. Semua itu membuatku merasa senang, senang bisa berada dalam kelompok yang hangat, senang bisa merasakan kebersamaan yang tulus.</p>
+
+            <p>Lalu, tibalah sebuah titik balik.</p>
+            <p>November 2022.</p>
+
+            <p>Entah bagaimana awalnya, tapi sejak saat itu, semua orang di kelas mulai meledekku dengan Neyney. Seolah-olah kami berdua pasangan. Mungkin karena Ferdy, yang sejak lama gemar menjodoh-jodohkan kami, semakin sering menggoda. Hingga perlahan, ledekan itu menjadi sesuatu yang familiar bagi semua orang.</p>
+
+            <p>Ada satu kejadian yang tak pernah kulupakan. Kelas kami diminta maju bersama untuk bernyanyi di hari guru. Aku berdiri di samping Neyney, sekadar kebetulan, karena memang kami maju berbarengan dengan seluruh kelas. Tapi momen singkat itu diabadikan dalam foto, dan seakan menjadi bahan bakar baru bagi lelucon teman-temanku.</p>`,
+
+            // Halaman 5
+            `<p>Ferdy kemudian mulai berkata bahwa aku dan Neyney pasti cocok. Semua orang mengangguk-angguk seolah mengiyakan. Kata mereka, kami terlihat sempurna bersama. Sejak hari itu, lagu "Sempurna" tiba-tiba menjadi lagu wajib untuk meledek kami.</p>
+
+            <p>Lalu datanglah Desember 2022.</p>
+            <p>Aku tahu, sebelumnya aku selalu berkata bahwa cinta itu tidak nyata, bahwa cinta hanyalah abu-abu. Dan keyakinan itu tidak berubah. Aku masih menganggap cinta tidak pernah ada.</p>
+            <p>Tapi sejak dekat dengan Neyney, ada sesuatu yang baru, sesuatu yang berbeda. Bukan cinta, bukan perasaan yang mendalam seperti di cerita-cerita, melainkan… suka.</p>
+
+            <p>Semua berawal dari hal kecil sebuah game yang membuat kami sering berinteraksi. Dari situ, aku mulai merasakan kedekatan. Hubungan kami terasa akrab, meski dalam hatiku aku tetap menyangkal, meyakinkan diri bahwa ini bukan cinta. Hanya sekadar suka. Karena menurutku, suka itu wajar, sedangkan cinta… tetap tidak nyata.</p>
+
+            <p>Hingga tiba 1 Desember 2022.</p>
+            <p>Hari itu, entah bagaimana, kami ramai-ramai pergi ke Gramedia. Dan di sana, untuk pertama kalinya, aku benar-benar berinteraksi cukup lama dengan Neyney, meskipun dengan gangguan ledekan. Setiap kali aku dan dia mulai berbicara, selalu saja ada suara "ciee… cieee…" yang membuat suasana berubah canggung.</p>
+
+            <p>Kami berbicara cukup lama, lebih lama dari biasanya. Dan saat itu terjadi, jantungku berdegup kencang, aneh, berisik, seolah ingin segera berhenti karena terlalu gaduh. Rasanya sulit kujelaskan. Aku bahkan ingin cepat menyelesaikan percakapan, bukan karena tidak nyaman, tapi karena takut detak itu terlalu keras hingga tak bisa kusembunyikan.</p>
+
+            <p>"Mungkinkah ini artinya aku suka?" pikirku dalam hati.</p>
+
+            <p>Dan mungkin, memang itulah awalnya.</p>
+            <p>Bukan cinta. Belum cinta. Aku tetap yakin cinta itu tidak ada.</p>
+            <p>Tapi sejak hari itu, aku mulai suka pada Neyney.</p>`,
+
+            // Halaman 6
+            `<p>Sejak Gramedia, kami lebih sering berchatting. Bercanda, berbagi cerita, saling menyapa lewat pesan singkat. Aneh memang, karena meski obrolan lewat layar menjadi semakin akrab, di dunia nyata kami tetap jarang berinteraksi langsung.</p>
+
+            <p>Namun di balik semua itu, ada satu hal yang tak bisa kupungkiri, setiap kali namanya muncul di layar ponselku, aku merasa sesuatu yang berbeda. Sesuatu yang belum pernah kualami sebelumnya.</p>
+
+            <p>Semester 2 (2023)</p>
+            <p>Banyak hal terjadi di semester ini.</p>
+            <p>Hal-hal kecil yang, entah bagaimana, selalu membuat semua orang semakin yakin bahwa aku dan Neyney cocok. Kata mereka, "kalian harusnya jadian saja." Candaan itu makin sering terdengar, seolah angin ikut mengarahkan kami ke arah yang sama.</p>
+
+            <p>Namun, ada satu momen yang tidak akan pernah kulupakan di kelas 10: penampilan drama "Snow White."</p>
+
+            <p>Teman-temanlah yang membagi peran. Aku terpilih sebagai sang pangeran, sementara Neyney, tentu saja menjadi Snow White. Ya, jelas sudah, pilihan itu bukan kebetulan. Mereka sengaja melakukannya.</p>
+
+            <p>Meski begitu, aku tetap menjalani peran itu dengan profesional. Aku menikmati setiap momennya, setiap latihan, setiap adegan, setiap kali aku harus berdiri di sampingnya sebagai "pangeran." Tapi di balik itu semua, aku tetap menjaga jarak dengan perasaanku sendiri.</p>
+
+            <p>Karena bagiku, suka saja sudah cukup.</p>
+            <p>Aku tidak merasa perlu memvalidasi atau membuktikan apa pun, bahkan kepada diriku sendiri. Lagi pula, menurutku Neyney adalah tipe orang yang tidak terlalu peduli dengan hal-hal semacam itu. Dan justru karena itulah… aku memilih untuk tetap diam.</p>`,
+
+            // Halaman 7
+            `<p>Kelas 11</p>
+
+            <p>Banyak hal di kelas sebelumnya yang tak sempat kuceritakan, terlalu banyak detail kecil yang mungkin akan memakan waktu jika harus kusebutkan satu per satu. Jadi, mari langsung melompat ke kelas 11.</p>
+
+            <p>Di kelas baru ini, aku mulai menjalin kedekatan dengan Affa dan Habibi. Alasannya sederhana Ferdy dipindahkan ke kelas lain, sementara dengan Ikbal aku tidak terlalu sering berinteraksi lagi. Sebagai gantinya, aku menemukan lingkaran baru yang justru terasa begitu akrab.</p>
+
+            <p>Kedekatan itu juga terbentuk karena kami sama-sama aktif di OSIS. Dari situlah, perlahan-lahan tumbuh sebuah trio baru.</p>
+            <p>Setiap ada aku, pasti ada Affa dan Habibi.</p>
+            <p>Hingga akhirnya, hampir seluruh sekolah tahu tentang keberadaan trio itu sebuah pertemanan yang selalu berjalan beriringan, kemanapun kami pergi.</p>
+
+            <p>Aku sekelas dengan Affa, tapi tidak dengan Habibi. Oh iya, aku juga kembali sekelas dengan Zahra dan… Neyney.</p>
+
+            <p>Ada satu fakta kecil yang mungkin penting untuk kucatat di sini sejak kelas 10, Zahra dan Affa sudah berpacaran. Bahkan, akulah salah satu orang yang dulu membantu mereka saling berkomunikasi ketika awal-awalnya. Sampai akhirnya… ya, mereka resmi jadian.</p>
+
+            <p>Dan yang menarik, hubungan itu masih bertahan sampai sekarang, setidaknya sampai aku menuliskan cerita ini.</p>
+            <p>Entahlah, masih pacaran… kali?</p>
+
+            <p>Lanjut dengan ceritaku.</p>
+            <p>Aku tidak begitu ingat detail hubunganku dengan Neyney di kelas 11, karena jujur saja, pada masa ini aku lebih banyak fokus pada organisasi. Tapi ada satu hal yang tidak bisa kupungkiri, di semester 2 kelas 11, aku justru mulai sangat dekat dengannya.</p>
+
+            <p>Semua berawal dari sebuah tugas Geografi. Aku tidak bisa menjelaskan detailnya, tapi lewat tugas itu kami sering berkomunikasi. Dari situ, percakapan demi percakapan muncul, membuat jarak yang tadinya ada perlahan menghilang.</p>`,
+
+            // Halaman 8
+            `<p>Dan maaf, untuk Neyney… aku hanya benar-benar mengingat momen di ujung semester 2. Tapi justru di sanalah banyak hal berkesan terjadi.</p>
+
+            <p>Kami semakin dekat karena sebuah game, pjsk. Kami sering bermain bersama, bercanda, dan entah bagaimana game itu mampu mendekatkan kami di dunia nyata. Lalu ada Classmeet, di mana kami turun berdua. Meski akhirnya kalah, dan bahkan kalah dengan cara yang paling memalukan, anehnya, aku tetap merasa senang. Karena yang terpenting bagiku saat itu adalah kebersamaan dengannya.</p>
+
+            <p>Di penghujung kelas 11, rasa canggung yang dulu sering menghantui mulai benar-benar hilang. Kami bisa berinteraksi secara langsung tanpa malu, tanpa takut jadi bahan ledekan. Dan tanpa pernah ia ketahui, di balik semua itu, rasa sukaku padanya semakin bergejolak.</p>
+
+            <p>Sebenarnya, ada banyak faktor yang membuatku kian tenggelam dalam perasaan itu. Bukan hanya karena ia cantik, tapi juga karena ia pintar. Kombinasi keduanya membuatku merasa tak menemukan alasan sedikit pun untuk tidak menyukainya. Seolah-olah, otakku sendiri berkata, apa yang bisa menjadi alasan untuk tidak jatuh padanya?</p>
+
+            <p>Kelas 12</p>
+            <p>Awal Kelas 12</p>
+            <p>Disinilah awal mula semuanya. Awal mula aku bisa semakin dekat dengan Neyney, awal mula aku benar-benar mulai tertarik dengan yang namanya cinta, sesuatu yang dulu selalu kuanggap tidak nyata.</p>
+
+            <p>Seperti kebanyakan orang, awal kelas 12 tentu dipenuhi persiapan menghadapi UTBK. Semua orang sibuk mencari tempat les, begitu juga aku… begitu juga Neyney. Pada mulanya, kami berdua masih sama-sama bingung mau daftar ke mana. Tapi ternyata, pada akhirnya kami memilih tempat les yang sama, yaitu di GO.</p>
+
+            <p>Awalnya kami tidak sekelas. Aku yang memang tidak terlalu mengenal siapa-siapa di sana, akhirnya memberanikan diri untuk meminta pindah kelas, tentu dengan alasan supaya sekelas dengan Neyney. Bukan hanya karena aku menyukainya, tapi juga karena aku tidak ingin sendirian.</p>`,
+
+            // Halaman 9
+            `<p>Dan tanpa terasa, setelah itu, kedekatan kami melaju begitu cepat. Bahkan sangat cepat. Bisa dibilang, kami seperti orang pacaran… meskipun sebenarnya tidak. Atau mungkin lebih tepatnya seperti HTS hubungan tanpa status. Candaan kami, cara kami berbicara, cara kami saling menanggapi… semua terasa seperti pasangan sungguhan.</p>
+
+            <p>Tidak heran kalau di tempat les, salah satu guru pernah menganggap kami pacaran. Aku hanya bisa tersenyum, karena aku yakin bukan hanya guru itu yang berpikir begitu. Bagaimana tidak? Bayangkan saja: sebelum les, kami hampir selalu ke Gramedia berdua. Lalu berangkat les bersama. Orang lain mana mungkin tidak salah paham melihat itu?</p>
+
+            <p>Suatu malam, saat suasana kelas les cukup santai, Neyney tiba-tiba nyeletuk, "Semua orang nganggep kita pacaran, pacaran aja lah sekalian." Ia bilang itu sambil tertawa, jelas-jelas sebuah candaan. Tapi candaan itu justru membekas kuat di kepalaku.</p>
+
+            <p>Entah bagaimana, terlintas sebuah ide di otakku. Sebuah kalimat yang ingin sekali kuucapkan saat itu juga:</p>
+            <p>"Ney, pacaran boongan aja yuk… di depan semua orang."</p>
+            <p>Setelah obrolan itu, kami pun benar-benar membahas rencana. Bukan hanya sekadar candaan lewat, tapi kami duduk dan memikirkan plan bagaimana caranya agar semua orang bisa ikut terbawa dalam cerita yang kami buat: sebuah "pacaran boongan."</p>
+
+            <p>Kami menyusun strategi kecil-kecilan. Mulai dari bagaimana cara terlihat lebih mesra di depan orang lain, bagaimana memberi kode di media sosial, hingga detail kecil supaya kisah ini terasa nyata bagi siapa pun yang melihatnya.</p>
+
+            <p>Dan akhirnya, tepat pada 18 September 2024, kami memulai "operasi" itu. Langkah pertama: mengunggah sebuah story di Instagram. Hanya sebuah foto sederhana, kami berdua sedang minum di sebuah kafe. Tidak ada wajah yang ditunjukkan, hanya pemandangan orang lain yg duduk bersebrangan, gelas dan meja. Tapi justru karena itu, orang-orang yang melihat menjadi penasaran.</p>`,
+
+            // Halaman 10
+            `<p>Bagi kami berdua, momen berdua di kafe sebenarnya sudah hal yang biasa. Seperti yang pernah kuceritakan, kedekatan kami memang sudah jauh melampaui batas pertemanan biasa. Tapi bagi orang lain yang tidak tahu, story itu tentu menimbulkan tanda tanya besar.</p>
+
+            <p>Dan benar saja reaksi dari orang-orang luar biasa. Ada yang kaget, ada yang penasaran, ada juga yang langsung berasumsi bahwa kami benar-benar jadian. Aku dan Neyney hanya bisa tertawa membaca reaksi mereka. Ada kepuasan tersendiri saat melihat rencana kecil kami berhasil.</p>
+
+            <p>Meski begitu, harus kuakui… saat menekan tombol "upload" di detik terakhir itu, aku benar-benar deg-degan. Rasanya seperti melangkah ke sebuah dunia baru, dunia yang bahkan aku sendiri tidak tahu akan membawaku sejauh apa.</p>
+
+            <p>Setelah "operasi" pertama lewat story berhasil bikin heboh, kami pun semakin berani. Kami mulai sering jalan berdua, bukan hanya untuk menghabiskan waktu, tapi juga dengan tujuan terselubung: mengunggah momen-momen mesra ke story. Semua itu demi satu hal: membuat orang lain semakin yakin bahwa kami benar-benar pasangan.</p>
+
+            <p>Sejak awal, aku dan Neyney sudah menyusun rencana besar. Kami menyebutnya sebagai momen go public, dan waktu yang kami pilih sudah jelas: malam pesta di acara field trip kelas 12.</p>
+
+            <p>Hari-hari berlalu, konten demi konten terus kami unggah. Foto, story, potongan kecil kebersamaan kami. Semua itu seperti percikan-percikan api kecil yang pada akhirnya akan meledak menjadi kembang api di malam pesta.</p>
+
+            <p>Singkat cerita, tibalah hari field trip. Dari awal perjalanan pun kami tetap konsisten: tetap "menjual" momen-momen mesra ke publik. Dan puncaknya adalah malam pesta itu sendiri. Kami sudah bersepakat untuk mengenakan outfit dengan warna yang sama, detail kecil yang tampak sepele, tapi bagi orang lain jelas menambah kesan bahwa kami pasangan sungguhan.</p>`,
+
+            // Halaman 11
+            `<p>Di malam itu juga ada sesi voting untuk memilih Prom King dan Prom Queen. Dan di sini aku harus jujur… mungkin ini akan terdengar licik, bahkan jahat. Tapi sebenarnya, aku sudah "mengutak-atik" voting itu sedikit. Ya, aku sabotase. Hanya demi menambah percikan dalam "operasi" besar kami.</p>
+
+            <p>Mungkin bagi sebagian orang itu tidak adil, tapi saat itu aku benar-benar hanya ingin membuat momen itu sempurna. Maaf untuk pihak-pihak yang dirugikan… tapi aku harus mengakuinya sekarang, bahwa aku menikmatinya.</p>
+
+            <p>Dan akhirnya, di malam itulah semua rencana kami mencapai puncaknya. Kami "jadian." Ya, jadian atau setidaknya terlihat seperti itu. Di depan semua orang, kami resmi go public. Semua orang percaya kami pacaran, padahal semua itu hanyalah rencana, hanyalah sebuah permainan.</p>
+
+            <p>Tapi di balik tawa dan kepuasan melihat semua orang tertipu… aku tahu, dalam hatiku sendiri, ini bukan hanya boongan.</p>
+
+            <p>Field trip selesai. Semua orang percaya kami pacaran. Dan anehnya, kami pun mulai percaya juga. Bukan hanya pura-pura lagi, kami benar-benar sudah berinteraksi layaknya pasangan sungguhan. Bedanya, kali ini kami hampir tidak pernah lagi mengunggah konten atau story. Entah kenapa, tanpa sorotan orang lain, justru terasa lebih nyaman.</p>
+
+            <p>Awalnya ini semua hanya permainan. Tapi semakin lama, aku dan Neyney mulai larut di dalamnya. Seolah-olah kami lupa bahwa ini hanyalah "hubungan bohongan." Hingga suatu sore menjelang malam, aku terbawa suasana. Entah kenapa, di tengah canda seperti biasanya, tiba-tiba aku bilang, "Aku suka sama kamu."</p>
+
+            <p>Bagi kami, kalimat semacam itu sudah biasa, candaan manis yang sering terlontar. Tapi kali ini berbeda. Aku mengatakannya dengan serius. Neyney pun langsung merasa ada yang aneh, sampai ia menelponku.</p>`,
+
+            // Halaman 12
+            `<p>Tapi saat itu aku tetap tidak mampu jujur. Tidak sanggup mengatakan bahwa sebenarnya aku sudah lama menyimpan rasa suka padanya. Aku takut. Takut kalau aku jujur, semua momen indah ini hilang. Karena bagiku, semua momen bersama Neyney sangat berarti.</p>
+
+            <p>Namun Neyney terus mendesak, ingin tahu maksudku. "Beneran suka, atau cuma bercanda?" katanya. Kami pun akhirnya sepakat untuk membicarakan semuanya ketika bertemu.</p>
+
+            <p>Hari itu, saat jalan berdua, aku merasa kacau. Sepanjang main bareng, aku resah, bingung harus jujur bagaimana. Takut kalau semua akan rusak setelah pengakuan ini. Tapi pada akhirnya, dalam sesi deeptalk kami, aku memberanikan diri.</p>
+
+            <p>"Aku sebenernya suka sama kamu, Ney."</p>
+
+            <p>Dia menatapku. Lalu bertanya, "Kalau gitu, mau gimana? Pacaran beneran?"</p>
+
+            <p>Aku terdiam. Dalam hatiku muncul keraguan besar. Aku suka padanya, iya. Tapi aku juga takut. Karena selama ini aku tidak pernah membayangkan pacaran sungguhan. Aku hanya tahu satu hal: hubungan bohongan ini terasa begitu indah. Dan aku takut, kalau benar-benar pacaran, semuanya justru tidak seindah ini.</p>
+
+            <p>"Aku suka sama kamu, Ney," ulangku. "Mungkin… kita bisa pacaran. Tapi aku juga bingung."</p>
+
+            <p>Neyney pun tersenyum, lalu berkata, "Aku juga suka. Tapi kalau soal hubungan yang lebih serius… setelah UTBK aja, ya."</p>
+
+            <p>Aku hanya bisa terdiam. Bingung. Tak tahu harus merasa senang atau takut. Yang jelas, sejak hari itu, hubungan kami bukan lagi sekadar bohong-bohongan. Kami melangkah dengan sesuatu yang baru. Sesuatu yang lebih serius.</p>`,
+
+            // Halaman 13
+            `<p>Meskipun saat itu UTBK belum selesai, aku dan Neyney sudah sama-sama berkomitmen. Kami mulai menjalani hubungan ini sungguh-sungguh, bukan lagi sekadar "mainan" atau "bohongan." Semua tingkah laku, perhatian, dan komunikasi kami benar-benar seperti pasangan pada umumnya. Bedanya, kali ini bukan untuk konsumsi publik, tapi untuk kami berdua.</p>
+
+            <p>Kami jadi lebih sering jalan berdua. Setiap kali bersama, topik pembicaraan kami pun banyak seputar hubungan. Kami belajar bagaimana cara menjaga, memahami, bahkan menguatkan satu sama lain. Tentu ada kalanya hubungan ini retak, ada pertengkaran atau kesalahpahaman. Tapi justru dari situlah kami belajar banyak hal: bagaimana membangun kembali, bagaimana membuat hubungan ini lebih kuat dari sebelumnya.</p>
+
+            <p>Neyney pernah bilang, dia ingin hubungan yang bisa sustain, yang bisa bertahan lama. Dari situ aku sadar, aku juga harus belajar banyak. Belajar bagaimana menjaga rasa, bagaimana agar hubungan ini tetap utuh meskipun diterpa masalah.</p>
+
+            <p>Sampai akhirnya UTBK berakhir. (Aku nggak mau bahas UTBK di sini, karena itu bukan intinya.) Yang jelas, bahkan sebelum UTBK pun, kami sudah benar-benar pacaran. Dan setelahnya, hubungan itu tetap berjalan.</p>
+
+            <p>Hari-hari kami penuh dengan kebersamaan. Kami sering main, sering menghabiskan waktu berdua. Semua itu terasa indah sekaligus bittersweet, karena kami tahu, sebentar lagi kami akan berpisah. Kuliah menunggu, dan kami akan terpisah jarak, di kota yang berbeda, jauh dari satu sama lain.</p>
+
+            <p>Karena itu, kami sering membicarakan masa depan. Bagaimana hubungan ini harus dijaga saat nanti berjauhan. Apa yang harus dilakukan ketika kangen. Bagaimana caranya tetap percaya, tetap dekat, meski jarak memisahkan.</p>
+
+            <p>Kami merencanakan segalanya. Kami tahu akan ada banyak tantangan, tapi kami juga tahu satu hal, kami sama-sama ingin hubungan ini tetap ada. Tetap bertahan. Tetap hidup.</p>
+
+            <p>Tamat hehe..</p>`,
+
+            // Halaman 14
+            `<p>Pas gw tulis bagian ini gw lagi di kos. Ini gw mulai nulis dari 21 Agustus sampe sekarang 24 Agustus. Sehari sbelum ulang tahun lu ney. Gw mau minta maap kalo banyak momen yang sempet gw masukin.. slain waktu gw juga ya lu tau lah memori gw. Pasti ada ditel2 kecil yang kelewat gw minta maaf ada cerita yang gasempet gw masukin gw juga minta maaf bukan brarti momennya gapenting ya semuanya ada di hati gw ko..</p>
+
+            <p>Gw juga minta maaf kalau ada kekeliruan dalam menulisnya gw cuman ingin ngehadiahin sesuatu yang bner2 dateng dari gw sndiri, apa yang gw rasain. Smoga lu ga kecewa gw cuman ngasi cerita bgini.</p>
+
+            <p>Tadinya gw kepikiran buat web ucapan doang tapi keknya ngga ah takut lu bosen jadi gw coba bikin kek gini deh pakai bahasa novel karna lu suka baca huhu, maaf deh simpel.</p>
+
+            <p style="text-align: center; font-size: 1.5rem; margin-top: 30px; color: #d81b60;">
+                HAPPY BIRTHDAY
+            </p>
+            
+            <p style="text-align: right; font-style: italic; margin-top: 40px;">
+                Dengan love,<br>
+                Rafif
+            </p>`
+        ];
+
+        // Variabel untuk melacak halaman saat ini
+        let currentPage = 0;
+        const totalPages = storyPages.length;
+        
+        // Elemen DOM
+        const pageContent = document.getElementById('page-content');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const pageIndicator = document.getElementById('page-indicator');
+        
+        // Fungsi untuk menampilkan halaman
+        function showPage(pageNumber) {
+            pageContent.innerHTML = storyPages[pageNumber];
+            pageIndicator.textContent = `Halaman ${pageNumber + 1}/${totalPages}`;
+            
+            // Mengatur status tombol navigasi
+            prevBtn.disabled = (pageNumber === 0);
+            nextBtn.disabled = (pageNumber === totalPages - 1);
+            
+            currentPage = pageNumber;
+        }
+        
+        // Event listener untuk tombol navigasi
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 0) {
+                showPage(currentPage - 1);
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
+                showPage(currentPage + 1);
+            }
+        });
+        
+        // Memulai dengan halaman pertama
+        showPage(0);
+        
+        // Script untuk membuat efek konfeti
+        function createConfetti() {
+            const colors = ['#ff4081', '#c2185b', '#f50057', '#d81b60', '#ec407a'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Warna acak
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.backgroundColor = randomColor;
+                
+                // Posisi acak
+                confetti.style.left = Math.random() * 100 + 'vw';
+                
+                // Ukuran acak
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+                
+                // Animasi dengan delay acak
+                confetti.style.animation = `fall ${Math.random() * 5 + 5}s linear ${Math.random() * 5}s infinite`;
+                
+                document.body.appendChild(confetti);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', createConfetti);
+    </script>
+</body>
+</html>
